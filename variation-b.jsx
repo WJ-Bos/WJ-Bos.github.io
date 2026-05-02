@@ -678,7 +678,7 @@ function BContact({ data }) {
             Let's build something.
           </div>
           <div style={{ ...bStyles.sans, fontSize: 15, color: B_PALETTE.dim, marginBottom: 28, maxWidth: 540 }}>
-            Open to roles in Centurion / Johannesburg / Pretoria, remote-friendly across SA. Always happy to chat about systems, side projects, or coffee.
+            Happily employed and not actively looking, but always up for a good conversation — distributed systems, side projects, or just coffee. Drop a line.
           </div>
 
           <div style={{ display: "grid", gap: 6 }}>
