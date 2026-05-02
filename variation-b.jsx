@@ -1,6 +1,16 @@
 /* global React */
 const { useEffect, useRef, useState } = React;
 
+function useIsMobile(bp = 720) {
+  const [mob, setMob] = useState(typeof window !== "undefined" ? window.innerWidth <= bp : false);
+  useEffect(() => {
+    const onR = () => setMob(window.innerWidth <= bp);
+    window.addEventListener("resize", onR);
+    return () => window.removeEventListener("resize", onR);
+  }, [bp]);
+  return mob;
+}
+
 // =============================================================
 // Variation B — Terminal-inspired
 // Monospace-forward, tighter density, command-prompt motifs
@@ -100,6 +110,7 @@ function BPrompt({ user = "wj", host = "boshoff.dev", path = "~", cmd, children 
 }
 
 function BNav() {
+  const mob = useIsMobile();
   const items = [
     { href: "#work", label: "work" },
     { href: "#exp", label: "experience" },
@@ -122,18 +133,20 @@ function BNav() {
         style={{
           maxWidth: 1100,
           margin: "0 auto",
-          padding: "14px 40px",
+          padding: mob ? "10px 16px" : "14px 40px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
           fontSize: 12.5,
+          flexWrap: "wrap",
+          gap: 8,
         }}
       >
         <div>
           <span style={{ color: B_PALETTE.accent }}>~/wj-boshoff</span>
           <span style={{ color: B_PALETTE.dim, marginLeft: 8 }}>(main)</span>
         </div>
-        <div style={{ display: "flex", gap: 18 }}>
+        <div style={{ display: "flex", gap: mob ? 10 : 18, flexWrap: "wrap" }}>
           {items.map((it) => (
             <a
               key={it.href}
@@ -161,6 +174,7 @@ function BNav() {
 }
 
 function BHero({ data }) {
+  const mob = useIsMobile();
   const [typed, setTyped] = useState("");
   const fullCmd = "cat about.md";
   useEffect(() => {
@@ -174,7 +188,7 @@ function BHero({ data }) {
   }, []);
 
   return (
-    <section style={{ maxWidth: 1100, margin: "0 auto", padding: "80px 40px 100px", position: "relative", zIndex: 1 }}>
+    <section style={{ maxWidth: 1100, margin: "0 auto", padding: mob ? "32px 16px 50px" : "80px 40px 100px", position: "relative", zIndex: 1 }}>
       <div
         style={{
           border: `1px solid ${B_PALETTE.line}`,
@@ -203,7 +217,7 @@ function BHero({ data }) {
           </div>
         </div>
 
-        <div style={{ padding: "28px 28px 36px" }}>
+        <div style={{ padding: mob ? "18px 16px 24px" : "28px 28px 36px" }}>
           <BPrompt cmd={`whoami`}>
             <div style={{ color: B_PALETTE.text, fontSize: 13, paddingLeft: 0 }}>WJ Boshoff</div>
           </BPrompt>
@@ -217,7 +231,7 @@ function BHero({ data }) {
                   <div
                     style={{
                       ...bStyles.sans,
-                      fontSize: "clamp(36px, 5.5vw, 64px)",
+                      fontSize: "clamp(28px, 7vw, 64px)",
                       lineHeight: 1.05,
                       letterSpacing: "-0.025em",
                       fontWeight: 500,
@@ -234,7 +248,7 @@ function BHero({ data }) {
                   </div>
                   <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                     <BTag label="📍 Centurion, ZA" />
-                    <BTag label="● Available" accent />
+                    <BTag label="● Employed" accent />
                     <BTag label={`since ${data.startedPro}`} />
                   </div>
                 </div>
@@ -246,7 +260,7 @@ function BHero({ data }) {
             <BReveal delay={300}>
               <div style={{ marginTop: 28 }}>
                 <BPrompt cmd="ls ./quick-links" />
-                <div style={{ marginTop: 10, display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 6, fontSize: 12.5 }}>
+                <div style={{ marginTop: 10, display: "grid", gridTemplateColumns: mob ? "repeat(2, 1fr)" : "repeat(4, 1fr)", gap: 6, fontSize: 12.5 }}>
                   <BFile name="email" value={data.email} href={`mailto:${data.email}`} />
                   <BFile name="github" value="github.com/WJ-Bos" href={data.github} />
                   <BFile name="phone" value="079 873 7177" />
@@ -342,10 +356,11 @@ function BSectionHeader({ tag, count, sub }) {
 }
 
 function BWork({ data }) {
+  const mob = useIsMobile();
   return (
-    <section id="work" style={{ maxWidth: 1100, margin: "0 auto", padding: "60px 40px 80px", position: "relative", zIndex: 1 }}>
+    <section id="work" style={{ maxWidth: 1100, margin: "0 auto", padding: mob ? "40px 16px 50px" : "60px 40px 80px", position: "relative", zIndex: 1 }}>
       <BSectionHeader tag={`grep -r "shipped" ./projects`} count={data.projects.length} />
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 14 }}>
+      <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "repeat(2, 1fr)", gap: 14 }}>
         {data.projects.map((p, i) => (
           <BReveal key={p.name} delay={i * 70}>
             <BProjectCard project={p} />
@@ -461,8 +476,9 @@ function BProjectCard({ project }) {
 }
 
 function BExperience({ data }) {
+  const mob = useIsMobile();
   return (
-    <section id="exp" style={{ maxWidth: 1100, margin: "0 auto", padding: "60px 40px 80px", position: "relative", zIndex: 1 }}>
+    <section id="exp" style={{ maxWidth: 1100, margin: "0 auto", padding: mob ? "40px 16px 50px" : "60px 40px 80px", position: "relative", zIndex: 1 }}>
       <BSectionHeader tag="git log --author='WJ' --since='2025-01'" />
       {data.experience.map((job) => (
         <BReveal key={job.company}>
@@ -535,9 +551,10 @@ function BExperience({ data }) {
 }
 
 function BStack({ data }) {
+  const mob = useIsMobile();
   const entries = Object.entries(data.stack);
   return (
-    <section id="stack" style={{ maxWidth: 1100, margin: "0 auto", padding: "60px 40px 80px", position: "relative", zIndex: 1 }}>
+    <section id="stack" style={{ maxWidth: 1100, margin: "0 auto", padding: mob ? "40px 16px 50px" : "60px 40px 80px", position: "relative", zIndex: 1 }}>
       <BSectionHeader tag="cat ~/.toolbox" count={entries.length} />
       <div
         style={{
@@ -552,9 +569,9 @@ function BStack({ data }) {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "180px 1fr",
-                gap: 24,
-                padding: "16px 20px",
+                gridTemplateColumns: mob ? "1fr" : "180px 1fr",
+                gap: mob ? 6 : 24,
+                padding: mob ? "14px 16px" : "16px 20px",
                 borderBottom: i === entries.length - 1 ? "none" : `1px solid ${B_PALETTE.line}`,
                 alignItems: "baseline",
               }}
@@ -574,10 +591,11 @@ function BStack({ data }) {
 }
 
 function BAbout({ data }) {
+  const mob = useIsMobile();
   return (
-    <section id="about" style={{ maxWidth: 1100, margin: "0 auto", padding: "60px 40px 80px", position: "relative", zIndex: 1 }}>
+    <section id="about" style={{ maxWidth: 1100, margin: "0 auto", padding: mob ? "40px 16px 50px" : "60px 40px 80px", position: "relative", zIndex: 1 }}>
       <BSectionHeader tag="cat about.md" />
-      <div style={{ display: "grid", gridTemplateColumns: "260px 1fr", gap: 40, alignItems: "start" }}>
+      <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "260px 1fr", gap: mob ? 24 : 40, alignItems: "start" }}>
         <BReveal>
           <div
             style={{
@@ -591,18 +609,11 @@ function BAbout({ data }) {
               overflow: "hidden",
             }}
           >
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 6px, ${B_PALETTE.line} 6px, ${B_PALETTE.line} 7px)`,
-                opacity: 0.6,
-              }}
+            <img
+              src="./me.jpeg"
+              alt="WJ Boshoff"
+              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: "grayscale(0.15)" }}
             />
-            <div style={{ position: "relative", textAlign: "center" }}>
-              <div style={{ fontSize: 11, color: B_PALETTE.dim, letterSpacing: "0.16em" }}>./photo.jpg</div>
-              <div style={{ fontSize: 10, color: B_PALETTE.dimmer, marginTop: 4 }}>placeholder</div>
-            </div>
           </div>
         </BReveal>
         <BReveal delay={100}>
@@ -612,7 +623,7 @@ function BAbout({ data }) {
             ))}
           </div>
 
-          <div style={{ marginTop: 28, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
+          <div style={{ marginTop: 28, display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: 24 }}>
             <div>
               <div style={{ fontSize: 11.5, color: B_PALETTE.accent, marginBottom: 10 }}>// education</div>
               {data.education.map((e) => (
@@ -640,8 +651,9 @@ function BAbout({ data }) {
 }
 
 function BContact({ data }) {
+  const mob = useIsMobile();
   return (
-    <section id="contact" style={{ maxWidth: 1100, margin: "0 auto", padding: "60px 40px 100px", position: "relative", zIndex: 1 }}>
+    <section id="contact" style={{ maxWidth: 1100, margin: "0 auto", padding: mob ? "40px 16px 60px" : "60px 40px 100px", position: "relative", zIndex: 1 }}>
       <BSectionHeader tag="curl mailto:wjbosdev@gmail.com" />
       <BReveal>
         <div
@@ -649,7 +661,7 @@ function BContact({ data }) {
             background: B_PALETTE.bgElev,
             border: `1px solid ${B_PALETTE.line}`,
             borderRadius: 6,
-            padding: 32,
+            padding: mob ? 20 : 32,
           }}
         >
           <div
@@ -697,6 +709,7 @@ function BContact({ data }) {
 }
 
 function BContactLine({ icon, label, value, href }) {
+  const mob = useIsMobile();
   const [hover, setHover] = useState(false);
   const Wrap = href ? "a" : "div";
   return (
@@ -708,8 +721,8 @@ function BContactLine({ icon, label, value, href }) {
       onMouseLeave={() => setHover(false)}
       style={{
         display: "grid",
-        gridTemplateColumns: "30px 100px 1fr 24px",
-        gap: 14,
+        gridTemplateColumns: mob ? "22px 1fr 18px" : "30px 100px 1fr 24px",
+        gap: mob ? 10 : 14,
         alignItems: "baseline",
         padding: "10px 12px",
         borderRadius: 4,
@@ -721,8 +734,8 @@ function BContactLine({ icon, label, value, href }) {
       }}
     >
       <span style={{ color: B_PALETTE.accent, fontSize: 14, textAlign: "center" }}>{icon}</span>
-      <span style={{ color: B_PALETTE.dim, fontSize: 12 }}>{label}</span>
-      <span style={{ ...bStyles.sans, color: hover && href ? B_PALETTE.accent : B_PALETTE.text, fontSize: 14.5 }}>{value}</span>
+      <span style={{ color: B_PALETTE.dim, fontSize: 12, display: mob ? "none" : "inline" }}>{label}</span>
+      <span style={{ ...bStyles.sans, color: hover && href ? B_PALETTE.accent : B_PALETTE.text, fontSize: mob ? 13 : 14.5, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{value}</span>
       {href && (
         <span style={{ color: hover ? B_PALETTE.accent : B_PALETTE.dimmer, transform: hover ? "translateX(3px)" : "none", transition: "transform 180ms, color 180ms" }}>
           →
