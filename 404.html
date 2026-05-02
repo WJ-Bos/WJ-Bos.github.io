@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>404 — WJ Boshoff</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0a0a0b;
+    --bg-elev: #101012;
+    --line: #1c1c1f;
+    --text: #e7e6e2;
+    --dim: #7d7c78;
+    --dimmer: #4a4a47;
+    --accent: oklch(0.82 0.08 200);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; }
+  body {
+    display: grid;
+    place-items: center;
+    padding: 40px;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 80px 80px;
+    background-position: -1px -1px;
+  }
+  .wrap {
+    max-width: 640px;
+    text-align: left;
+    background: var(--bg);
+    padding: 48px 40px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  }
+  .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+  .meta .bar { width: 32px; height: 1px; background: var(--line); }
+  .meta .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: oklch(0.78 0.15 30);
+    box-shadow: 0 0 12px oklch(0.78 0.15 30 / 0.6);
+  }
+  h1 {
+    font-size: clamp(72px, 12vw, 140px);
+    font-weight: 500;
+    margin: 0 0 8px;
+    letter-spacing: -0.04em;
+    line-height: 0.92;
+  }
+  h1 .accent {
+    color: var(--accent);
+    font-family: 'Instrument Serif', 'EB Garamond', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+  h2 {
+    font-size: 22px;
+    font-weight: 500;
+    margin: 0 0 20px;
+    letter-spacing: -0.01em;
+  }
+  p { color: var(--dim); font-size: 15px; line-height: 1.6; margin: 0 0 32px; max-width: 480px; }
+  .stack-trace {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--dimmer);
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 14px 16px;
+    margin-bottom: 32px;
+    white-space: pre-wrap;
+    line-height: 1.6;
+  }
+  .stack-trace .err { color: oklch(0.78 0.15 30); }
+  .links { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    padding: 12px 18px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    color: var(--text);
+    text-decoration: none;
+    transition: border-color 200ms, color 200ms, background 200ms;
+  }
+  .btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: oklch(0.82 0.08 200 / 0.08);
+  }
+  .btn.primary {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .btn.primary:hover { background: oklch(0.82 0.08 200 / 0.16); }
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="meta">
+      <span class="dot"></span>
+      <span>HTTP 404</span>
+      <span class="bar"></span>
+      <span>Not Found</span>
+    </div>
+    <h1>4<span class="accent">o</span>4</h1>
+    <h2>This route returned nothing.</h2>
+    <p>The page you're after has been moved, deleted, or never compiled in the first place. Try one of the routes below.</p>
+
+    <pre class="stack-trace">> GET /<span class="err">requested-path</span>
+↳ <span class="err">ResourceNotFoundException</span>: no handler matched
+↳ stack: router.resolve → 404</pre>
+
+    <div class="links">
+      <a href="./" class="btn primary">← Back to home</a>
+      <a href="https://github.com/WJ-Bos" class="btn" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      <a href="mailto:wjbosdev@gmail.com" class="btn">Email me</a>
+    </div>
+  </main>
+</body>
+</html>
