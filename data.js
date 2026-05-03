@@ -34,8 +34,6 @@ window.PORTFOLIO = {
     {
       name: "Yap",
       tag: "Voice-first productivity",
-      url: "https://github.com/WJ-Bos/yap-app",
-      urlLabel: "github.com/WJ-Bos/yap-app",
       kind: "Mobile",
       stack: ["Flutter", ".NET 10", "ASP.NET Core", "PostgreSQL", "pgvector", "Whisper", "Gemini 2.5"],
       description:
