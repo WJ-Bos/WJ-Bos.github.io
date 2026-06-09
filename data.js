@@ -29,7 +29,7 @@ window.PORTFOLIO = {
       stack: ["TanStack Start", "TypeScript", "PostgreSQL", "Drizzle", "tonal.js", "Tone.js", "AlphaTab"],
       description:
         "Music-theory learning platform for guitarists. Interactive SVG fretboard, structured curriculum with prerequisites, ear-training, spaced-repetition scheduling, runtime audio synthesis via Tone.js, and tab rendering with AlphaTab. PostgreSQL via Drizzle for progress.",
-      year: "2025",
+      year: "2026",
     },
     {
       name: "Yap",
@@ -38,7 +38,7 @@ window.PORTFOLIO = {
       stack: ["Flutter", ".NET 10", "ASP.NET Core", "PostgreSQL", "pgvector", "Whisper", "Gemini 2.5"],
       description:
         "Cross-platform mobile app that turns spoken notes into structured actions — tasks, calendar events, reminders, emails, expenses. Whisper for transcription, Gemini 2.5 Flash for extraction + generation, pgvector for semantic recall.",
-      year: "2025",
+      year: "2026",
     },
     {
       name: "Local Cloud",
@@ -49,7 +49,7 @@ window.PORTFOLIO = {
       stack: ["Java 21", "Spring Boot", "React", "Terraform", "Docker", "PostgreSQL"],
       description:
         "A self-built platform that mimics AWS RDS-style provisioning on a local box. Provision PostgreSQL, MySQL, MariaDB, Mongo, Redis through a React UI; backend writes Terraform per instance and orchestrates Docker. Live log streaming, version selection, encrypted credentials.",
-      year: "2024",
+      year: "2026",
     },
     {
       name: "Koinon",
@@ -58,7 +58,7 @@ window.PORTFOLIO = {
       stack: ["Flutter", "Rust", "PostgreSQL", "LLM ingestion"],
       description:
         "Cross-platform Bible study app with a Rust-backed service layer. AI ingestion-and-generation pipeline produces curated study plans grounded in the books of the Bible. FCM push, generated cover art, typography system designed for long-form reading.",
-      year: "2024",
+      year: "2026",
     },
   ],
 
